@@ -1,0 +1,17 @@
+<% @flights.each do |flight| %>
+	<p>Starting: <%= flight.starting_airport.code %></p>
+	<p>Finishing: <%= flight.finishing_airport.code %></p>
+<%end%>
+
+<h3> Search here </h3>
+<%= form_tag('/flights#index', method: "get") do %> 
+	  <%= label_tag :starting_airport_id %>
+  	  <%= text_field_tag :starting_airport_id %>
+<% end %>
+
+<% if @searched_flights != nil %>
+	<% @searched_flights.each do |flight| %>
+		<p>Starting: <%= flight.starting_airport.code %></p>
+		<p>Finishing: <%= flight.finishing_airport.code %></p>
+	<%end%>
+<% end %>
