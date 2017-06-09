@@ -1,17 +1,31 @@
-<% @flights.each do |flight| %>
-	<p>Starting: <%= flight.starting_airport.code %></p>
-	<p>Finishing: <%= flight.finishing_airport.code %></p>
-<%end%>
-
-<h3> Search here </h3>
-<%= form_tag('/flights#index', method: "get") do %> 
-	  <%= label_tag :starting_airport_id %>
-  	  <%= text_field_tag :starting_airport_id %>
+<h1> Search here </h1>
+<%= form_tag('/flights#index', method: "get") do %>  	  
+  	  <%= label_tag :starting_airport %>
+  	  <%= select_tag :starting_airport, options_for_select(@airport_codes) %>
+  	  <%= label_tag :finishing_airport %>
+  	  <%= select_tag :finishing_airport, options_for_select(@airport_codes) %>
+  	  <%= label_tag :start_date_time %>
+  	  <%= select_tag :start_date_time, options_for_select(@dates) %>
+      <%= label_tag :passengers %>
+      <%= select_tag :passengers, options_for_select([1, 2, 3, 4]) %>
+      <%= submit_tag "Search" %>
 <% end %>
 
-<% if @searched_flights != nil %>
-	<% @searched_flights.each do |flight| %>
-		<p>Starting: <%= flight.starting_airport.code %></p>
-		<p>Finishing: <%= flight.finishing_airport.code %></p>
-	<%end%>
+<% if @searched_flights != [] %>
+  <h2> Search Results </h2>
+  <%= form_tag('/bookings#new', method: "get") do %>
+  	<% @searched_flights.each do |flight| %>
+      <br>
+      <div style ="height: 280px; width: 400px; border:1px solid black">
+        <h3> Flight Details <%= radio_button_tag(:chosen_flight_id, flight.id) %> </h3>
+        <h4>Departure: <%= flight.starting_airport.code %> </h4>
+        <p>Date: <%= print_date(flight.start_date_time) %> Time: <%= print_time(flight.start_date_time) %></p>
+        <p>Duration: <%= flight.duration_seconds %></p>
+        <h4>Arrival: <%= flight.finishing_airport.code %> </h4>
+        <p>Date: <%= print_date(flight.start_date_time + flight.duration_seconds) %> Time: <%= print_time(flight.start_date_time + flight.duration_seconds) %></p>
+      </div>
+  	<%end%>
+    <%= hidden_field_tag :passengers, params[:passengers] %>
+    <%= submit_tag "Select"%>
+  <%end%>
 <% end %>

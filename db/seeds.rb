@@ -23,7 +23,8 @@ Airport.create!(code: "DFW")
 #Flights
 all_ports = Airport.all
 for i in (0..3)
-	for j in (i..3)
-		Flight.create!(start_date_time: DateTime.now, duration_seconds: 1, starting_airport_id: i + 1, finishing_airport_id: j + 1)
+	for j in (0..3)
+		Flight.create!(start_date_time: DateTime.now + i * j, duration_seconds: 1, starting_airport_id: i + 1, finishing_airport_id: j + 1)
+		Flight.create!(start_date_time: DateTime.now + i * j + 0.1, duration_seconds: 1, starting_airport_id: i + 1, finishing_airport_id: j + 1)
 	end
 end
