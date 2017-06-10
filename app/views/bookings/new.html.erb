@@ -1,0 +1,22 @@
+
+<h3> Flight Details </h3>
+<h4>Departure: <%= @flight.starting_airport.code %> </h4>
+<p>Date: <%= print_date(@flight.start_date_time) %> Time: <%= print_time(@flight.start_date_time) %></p>
+<p>Duration: <%= @flight.duration_seconds %></p>
+<h4>Arrival: <%= @flight.finishing_airport.code %> </h4>
+<p>Date: <%= print_date(@flight.start_date_time + @flight.duration_seconds) %> Time: <%= print_time(@flight.start_date_time + @flight.duration_seconds) %></p>
+
+<%= form_for(@booking, url: bookings_path) do |book|%>  	  
+  	<%= book.fields_for :passengers do |pass| %>
+   		<%= pass.label :name %>
+  		<%= pass.text_field :name %> 	
+  		<%= pass.label :email %>
+  		<%= pass.text_field :email %>
+  		<br>
+  		<br> 	
+  	<% end %> 
+  <%= book.hidden_field :flight_id, :value => @flight.id %>
+  <%= submit_tag "Submit" %>
+<% end %>
+
+<%= @message %>

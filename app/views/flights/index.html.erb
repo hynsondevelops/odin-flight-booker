@@ -13,7 +13,7 @@
 
 <% if @searched_flights != [] %>
   <h2> Search Results </h2>
-  <%= form_tag('/bookings#new', method: "get") do %>
+  <%= form_tag('/bookings/new', method: "get") do %>
   	<% @searched_flights.each do |flight| %>
       <br>
       <div style ="height: 280px; width: 400px; border:1px solid black">

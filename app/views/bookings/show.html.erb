@@ -1,0 +1,15 @@
+<h3> Flight Details </h3>
+<h4>Departure: <%= @flight.starting_airport.code %> </h4>
+<p>Date: <%= print_date(@flight.start_date_time) %> Time: <%= print_time(@flight.start_date_time) %></p>
+<p>Duration: <%= @flight.duration_seconds %></p>
+<h4>Arrival: <%= @flight.finishing_airport.code %> </h4>
+<p>Date: <%= print_date(@flight.start_date_time + @flight.duration_seconds) %> Time: <%= print_time(@flight.start_date_time + @flight.duration_seconds) %></p>
+
+<h3> Passenger Details </h3>
+<% @booking.passengers.each do |passenger| %>
+	<br> 
+	<div style ="height: 100px; width: 200px; border:1px solid black">
+		<p> Name: <%= passenger.name %> </p>
+		<p> Email: <%= passenger.email %> </p>
+	</div>
+<% end %>
