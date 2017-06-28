@@ -12,6 +12,7 @@ class BookingsController < ApplicationController
 		@booking = Booking.create(flight_id: params[:booking][:flight_id])
 		params[:booking][:passengers_attributes].each do |i|
 			@booking.passengers.create(name: params[:booking][:passengers_attributes][i][:name], email: params[:booking][:passengers_attributes][i][:email])
+			PassengerMailer.welcome_email(@booking.passengers.find_by(name: params[:booking][:passengers_attributes][i][:name])).deliver_now
 		end
 		redirect_to booking_path(@booking.id)
 	end
